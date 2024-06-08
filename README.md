@@ -1,2 +1,2 @@
-# AngoConsult
-Projecto De Programação
+# Gestao-de-Consultoria
+Projecto de PHP + MySQL

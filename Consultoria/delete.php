@@ -1,6 +1,7 @@
 <?php
     include "db.php";
     $id = $_GET['id'];
+    echo $id;
 
     $sql = "DELETE FROM mensagens WHERE id=$id";
 

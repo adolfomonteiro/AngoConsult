@@ -23,7 +23,27 @@
     <title>Landing Page</title>
 </head>
 <body>
-    <style>
+<div id="progress-bar"></div>
+<style>
+  #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 6px;
+            background-color: #C5CAE9;
+            z-index: 9999;
+            transition: width 1s ease-out;
+        }
+
+        /* Animação para o loader */
+        @keyframes progress {
+            0% { width: 0; }
+            50% { width: 10%; }
+            100% { width: 50%; }
+        }
+  </style>
+  <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
     *{
         margin:0;
@@ -33,6 +53,7 @@
     body{
          height:100vh;
             font-family:'Poppins',sans-serif;
+            
         }
         :root{
         --cor1:#434343;
@@ -44,6 +65,7 @@
             display:flex;
             justify-content:space-around;
             padding:10px;
+            font-family:'Poppins',sans-serif;
         }
         .logo{
             margin-top:10px;
@@ -226,46 +248,55 @@
             display:flex;
         }
         .servicos{
-          display:block;
            justify-content:space-between;
-           margin-top:-30px;
+           margin-top:-60px;
         }
         .servicos h2{
-            margin:25px;
+            margin:50px;
             color:var(--cor2);
+            display: block;
         }
       
         .servicos-i{
             display:flex;
             margin:auto;
             justify-content:space-between;
+            margin-left:400px;
+            margin-top:-295px;
+            align-items:center;
         }
         .img-servicos{
             border-radius:30px;
+            margin-left:500px;
+            position:absolute;
+            top:10px;
         }
         .svg{
-            margin:auto;
             cursor:pointer;
-            margin-top:-10px;
-            margin-left:90px;
             justify-content:justify;
+            left:90px;
+            top:10px;
+            position:relative;
         }
         h3{
             color:var(--cor3);
-            left:-810px;
-            top:-30px;
             font-weight:500;
+            font-size:15px;
+            max-width:max-content;
+            left:190px;
+            top:-30px;
             position:relative;
-            padding:20px;
-            text-align:justify;
+            height:20px;
+            align-items:center;
         }
         .contacto h2{
-            margin:25px;
+            margin:35px;
             color:var(--cor2);
         }
         .contacto{
             display:block;
             justify-content:space-between;
+            margin-top:-10px;
         }
         .contacto-h1{
            display:flex;
@@ -358,32 +389,51 @@
             color:var(--cor1);
         }
         .servicos-content {
-    display: none;
-    padding: 10px;
-}
+            display: none;
+            padding: 5px;
+            margin-top:-20px;
+        }
 
-.servicos-header {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-}
+        .servicos-header {
+            display: block;
+            align-items: center;
+            cursor: pointer;
+        }
 
-.servicos-header svg {
-    transition: transform 0.3s;
-}
+        .servicos-header svg {
+            transition: transform 0.3s;
+            display:block;
+        }
 
-.servicos-header.active svg {
-    transform: rotate(90deg);
-}
+        .servicos-header.active svg {
+            transform: rotate(90deg);
+        }
 
-.servicos-header h3 {
-    margin-left: 10px;
-}
-p{
-    text-align:center;
-}
+        .servicos-header h3 {
+            margin-left: -95px;
+            display: block;
+            padding:20px;
+        }
+        p{
+            text-align:center;
+        }
+        .servicos-content p{
+            max-width:max-content;
+            margin:auto;
+            text-align:left;
+            margin-left:10px;
+        }
+        .servicos-item svg{
+            display:block;
+        }
+        .servicos-container{
+            display:block;
+            justify-content:space-around;
+            position:relative;
+            top:-40px;
+            height:50vh;
+        }
     </style>
- <?php  ?>
     <header>
         <img src="logo.png" alt="logotipo" class="logo" width="89" height="60">
         <nav>
@@ -402,7 +452,9 @@ p{
                 </li>
             </ul>
         </nav>
-        <button id="agendar">Agendar Consultoria</button>
+        <a href="index.php">
+        <button id="terminar">Terminar Sessão</button>
+        </a>
     </header>
     <main>
     <div class="landing">
@@ -459,7 +511,7 @@ p{
         <h2>Sobre Nós</h2>
     </div>
     <div class="sobre-img">
-        <img src="home3.png" alt="Consultores" class="img-consultores" width="580" height="200">
+        <img src="pc.png" alt="Consultores" class="img-consultores" width="580" height="300">
     <div class="sobre-texto">
     <div class="sobre-text">
         <p class="sobre-p">
@@ -479,6 +531,7 @@ p{
     <div class="servicos" id="services">
         <h2>Serviços</h2>
 
+        <div class="servicos-container">
         <div class="servicos-item">
             <div class="servicos-header">
     <svg class="svg" width="20px" height="20px" viewBox="0 0 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -487,7 +540,14 @@ p{
     <h3>Implementação Geral</h3>
     </div>
     <div class="servicos-content">
-        <p>Conteúdo Implementação Geral.</p>
+        <strong>Conteúdo Implementação Geral.</strong>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>
+            optio illum dolores modi at ad minima raesentium.
+
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>
+            optio illum dolores modi at ad minima raesentium.
+        </p>
     </div>
 </div>
 <div class="servicos-item">
@@ -498,7 +558,14 @@ p{
     <h3>Estratégica de Marketing</h3>
     </div>
     <div class="servicos-content">
-        <p>Conteúdo sssssssssssssssssss</p>
+        <strong>Estratégica de Marketing</strong>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>
+            optio illum dolores modi at ad minima raesentium.
+
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>
+            optio illum dolores modi at ad minima raesentium.
+        </p>
     </div>
 </div>
 <div class="servicos-item">
@@ -509,25 +576,21 @@ p{
     <h3>Estratégica de Negócio</h3>
 </div>
     <div class="servicos-content">
-        <p>Conteúdo sobre Estratégia de Negócio</p>
+        <strong>Estratégia de Negócio</strong>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>
+            optio illum dolores modi at ad minima raesentium.
+
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>
+            optio illum dolores modi at ad minima raesentium.
+        </p>
     </div>
 </div>
-<div class="servicos-item">
-    <div class="servicos-header">
-        <svg class="svg" width="20px" height="20px" viewBox="0 0 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-        <path d="M9.644 8.5l-6.854 6.854-0.707-0.707 6.146-6.147-6.146-6.146 0.707-0.708 6.854 6.854zM7.634 1.646l-0.707 0.708 6.146 6.146-6.146 6.146 0.707 0.707 6.853-6.853-6.853-6.854z" fill="#000000" />
-        </svg>
-        <h3>Planos e Análises</h3>
-    </div>
-    <div class="servicos-content">
-        <p>Conteúdo sobre Estratégia de Negócio</p>
-    </div>
-</div>
-    </div>
     <div class="servicos-i">
         <img src="home4.png" alt="image" class="img-servicos">
     </div>
-
+    </div>
+    </div>
 
 <div class="contacto" id="contact">
     <div class="contacto-h1">
@@ -630,5 +693,17 @@ document.querySelectorAll('.servicos-header').forEach(header => {
 });
 </script>
 
+<script>
+       document.addEventListener('DOMContentLoaded', function() {
+            var progressBar = document.getElementById('progress-bar');
+            progressBar.style.width = '50%';
+
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    progressBar.style.display = 'none';
+                }, 500);
+            });
+        });
+</script>
 </body>
 </html>

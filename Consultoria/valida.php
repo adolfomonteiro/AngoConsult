@@ -30,10 +30,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 echo "Função de usuário não reconhecida.";
             }
         } else {
-            echo "Senha incorreta.";
+            $_SESSION['erro'] = "Senha incorreta.";
+            header("Location:index.php");
+            exit();
         }
     } else {
-        $_SESSION['erro'] = "Usuário ou senha inválidos.";
+        $_SESSION['erro'] = "Esta conta não Existe!.";
         header("Location:index.php");
         exit();
     }

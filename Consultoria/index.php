@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
     else{
-    header("Location: consultoria.php");
+    header("Location: home.php");
     exit();
 }
         if ($user['nome'] || password_verify($senha, $user['senha'])) {
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo "Nome do usuário: " . $user['nome'] . "<br>";
             
         } else {
-            echo "<p style='color:red;'>Nome ou Senha incorreta !</p>";
+            echo "<p style='color:red;'>Nome e Senha incorreta !</p>";
         }
         
     } else {
@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-    body{
+    body{ 
         height:100vh;
         margin:0;
         box-sizing:border-box;
@@ -183,12 +183,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
    }
 </style>
 <body>
+<div id="progress-bar"></div>
+<style>
+  #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 6px;
+            background-color: #C5CAE9;
+            z-index: 9999;
+            transition: width 1s ease-out;
+        }
+
+        /* Animação para o loader */
+        @keyframes progress {
+            0% { width: 0; }
+            50% { width: 10%; }
+            100% { width: 50%; }
+        }
+  </style>
     <div class="container">
         <div class="container-all">
     <div class="container-left">
-        <img src="cartoes.png" alt="logotipo" class="logo">
-        <h3>Ter uma ideia é <span>certo</span><br>
-        consutar é <span>correcto</span><h3>
+        <br><br><br>
+    <h3>Ter uma ideia é <span>certo</span><br>
+    consultar é <span>correcto</span><h3>
+        <img src="loginUser.png" alt="logotipo" class="logo">
     </div>
     <div class="container-right">
     <h2>Seja Bem-Vindo a nossa página, <br>
@@ -215,4 +236,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
     </div>
 </body>
+<script>
+       document.addEventListener('DOMContentLoaded', function() {
+            var progressBar = document.getElementById('progress-bar');
+            progressBar.style.width = '80%';
+
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    progressBar.style.display = 'none';
+                }, 500);
+            });
+        });
+</script>
 </html>

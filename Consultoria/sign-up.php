@@ -12,8 +12,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($conn->query($sql) === TRUE) {
         header("Location: index.php");
     } else {
-        $erro = "Erro: " . $sql . "<br>" . $conn->error;
+       // $erro = "Erro: " . $sql . "<br>" . $conn->error;
+       echo "<p style='color:red;'>Usuário já Registrado!</p>";
     }
+    // if($nome && $funcao){
+    //     echo "Usuário já Registrado!";
+    // }
+    // else{
+    //     header("Location: index.php");
+    // }
 }
 ?>
 <!DOCTYPE html>
@@ -147,12 +154,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
    }
 </style>
 <body>
+<div id="progress-bar"></div>
+<style>
+  #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 6px;
+            background-color: #C5CAE9;
+            z-index: 9999;
+            transition: width 1s ease-out;
+        }
+
+        /* Animação para o loader */
+        @keyframes progress {
+            0% { width: 0; }
+            50% { width: 10%; }
+            100% { width: 50%; }
+        }
+  </style>
     <div class="container">
         <div class="container-all">
     <div class="container-left">
-        <img src="sign.png" alt="logotipo" class="logo">
-        <h3>Ter uma ideia é <span>certo</span><br>
-        consutar é <span>correcto</span><h3>
+    <br><br><br>
+    <h3>Ter uma ideia é <span>certo</span><br>
+    consultar é <span>correcto</span><h3>
+        <img src="signUp.png" alt="logotipo" class="logo">
     <br><br>
     </div>
     <div class="container-right">
@@ -165,7 +193,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <input required type="text" name="nome" id="nome" placeholder="Nome completo"><br>
         <input required type="number" name="telefone" id="telefone" placeholder="Telefone"><br>
         <select name="funcao" id="funcao">
-            <option value="Consultor">Consultor</option>
             <option value="Cliente">Cliente</option>
         </select><br>
         <input required type="password" name="senha" id="senha" placeholder="Senha"> 
@@ -176,4 +203,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
     </div>
 </body>
+<script>
+       document.addEventListener('DOMContentLoaded', function() {
+            var progressBar = document.getElementById('progress-bar');
+            progressBar.style.width = '80%';
+
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    progressBar.style.display = 'none';
+                }, 500);
+            });
+        });
+</script>
 </html>

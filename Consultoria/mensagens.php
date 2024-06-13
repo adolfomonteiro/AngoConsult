@@ -415,7 +415,29 @@ $result = $conn->query($sql);
             color:red;
         }
     </style>
+
+
 <body>
+<div id="progress-bar"></div>
+<style>
+  #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 6px;
+            background-color: #C5CAE9;
+            z-index: 9999;
+            transition: width 1s ease-out;
+        }
+
+        /* Animação para o loader */
+        @keyframes progress {
+            0% { width: 0; }
+            50% { width: 10%; }
+            100% { width: 50%; }
+        }
+  </style>
     <header>
     <h1><?php echo htmlspecialchars($consultor_nome); ?> logado!</h1>
     <p><a href="logout.php">Sair</a></p>
@@ -430,7 +452,7 @@ $result = $conn->query($sql);
     if($conn->connect_error){
         die("Conexao Falhou: ". $conn->connect_error);
     }
-    $sql = "SELECT  m.mensagem, m.data_envio, u.nome AS cliente_nome FROM mensagens m JOIN usuarios u ON m.cliente_id = u.id WHERE m.consultor_id = '$consultor_id' ORDER BY m.data_envio DESC";
+    $sql = "SELECT m.id,  m.mensagem, m.data_envio, u.nome AS cliente_nome FROM mensagens m JOIN usuarios u ON m.cliente_id = u.id WHERE m.consultor_id = '$consultor_id' ORDER BY m.data_envio DESC";
 
     $result = $conn->query($sql);
     
@@ -442,13 +464,15 @@ $result = $conn->query($sql);
             <th>Data</th>
             <th>Responder</th>
         </tr>";
+       # $id = $_GET['id'];
+       # $sql = "SELECT FROM mensagens WHERE id = $id";
         while ($row = $result->fetch_assoc()){
             echo "<tr>
             <td>" . htmlspecialchars($row['cliente_nome'])."</td>
             <td>" . htmlspecialchars($row['mensagem'])."</td>
             <td>" . htmlspecialchars($row['data_envio'])."</td>
             <td>
-            <a href='mensagens.php".isset($row["id"])."'>Responder |<a href='delete.php?id=".isset($row["id"])."'> Apagar</a></td>";
+            <a href='mensagens.php".$row["id"]."'>Responder |<a href='delete.php?id=".$row["id"]."'> Apagar</a></td>";
             "</tr>";
         }
         echo "</table>";
@@ -459,4 +483,16 @@ $result = $conn->query($sql);
     ?>
       </main>
 </body>
+<script>
+       document.addEventListener('DOMContentLoaded', function() {
+            var progressBar = document.getElementById('progress-bar');
+            progressBar.style.width = '50%';
+
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    progressBar.style.display = 'none';
+                }, 500);
+            });
+        });
+</script>
 </html>

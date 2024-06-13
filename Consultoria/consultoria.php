@@ -7,8 +7,11 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_funcao'] != 'Cliente') {
 }
 include 'db.php';
 
-$cliente_id = $_SESSION['user_id'];
-$cliente_nome = $_SESSION['user_nome'];
+$consultor_id = $_SESSION['user_id'];
+$consultor_nome = $_SESSION['user_nome'];
+
+$sql = "SELECT m.message, m.data_envio, u.nome AS cliente_nome FROM message m JOIN usuarios u ON m.cliente_id = u.id WHERE m.consultor_id = '$consultor_id' ORDER BY m.data_envio DESC";
+$result = $conn->query($sql);
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     date_default_timezone_set('Africa/Luanda');
@@ -19,7 +22,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $consultor_id = $conn->real_escape_string($consultor_id);
     $mensagem = $conn->real_escape_string($mensagem);
 
-    $sql = "INSERT INTO mensagens (cliente_id,consultor_id, mensagem,data_envio) VALUES ('$cliente_id,','$consultor_id','$mensagem','$data_envio')";
+    $sql = "INSERT INTO message (cliente_id,consultor_id, mensagem,data_envio) VALUES ('$cliente_id,','$consultor_id','$mensagem','$data_envio')";
     if($conn->query($sql) === TRUE){
         echo "<p style='color:green;'>Mensagem enviada com sucesso!</p>";
     }
@@ -37,9 +40,29 @@ $conn->close();
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <title>Agendar Consultoria</title>
+    <title>FeedBack Consultoria</title>
 </head>
 <body>
+<div id="progress-bar"></div>
+<style>
+  #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 6px;
+            background-color: #C5CAE9;
+            z-index: 9999;
+            transition: width 1s ease-out;
+        }
+
+        /* Animação para o loader */
+        @keyframes progress {
+            0% { width: 0; }
+            50% { width: 10%; }
+            100% { width: 50%; }
+        }
+  </style>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
     *{
@@ -179,7 +202,8 @@ $conn->close();
             justify-content:space-between;
         }
         #agendar{
-            margin-left:-620px;
+            margin-left:650px;
+            margin-top:-35px;
         }
         h1{
             text-align:center;
@@ -194,47 +218,40 @@ $conn->close();
         <nav>
             <ul>
                 <h1 class="link-active">
-                  <?php echo htmlspecialchars($cliente_nome); ?> Faça Já a sua Agenda
+                  <?php echo htmlspecialchars($consultor_nome); ?> Faça Já a sua Agenda
                 </h1>
             </ul>
         </nav>
     </header>
     <main>
     <form method="post" action="agendar.php">
-        <label for="consultor_id">Selecionar Consultor: </label>
-        <select name="consultor_id" id="consultor_id" required>
-            <?php
-            include 'db.php';
-            $sql = "SELECT id, nome FROM usuarios WHERE funcao = 'Consultor'";
-            $result = $conn->query($sql);
-            if($result->num_rows > 0){
-                while ($row = $result->fetch_assoc()) {
-                    echo "<option value='". $row['id']."'>". $row['nome'] . "</option>";
-                }
-            }
-            else{
-                echo "<option value=''>Nenhum Consultor disponível</option>";
-            }
-            $conn->close();
-            ?>
-        </select>
         <br>
         <label for="">Mensagem :</label>
         <textarea name="mensagem" id="mensagem" rows="4" cols="50" required></textarea>
         <br>
         <div class="btn">
         <button type="submit">Enviar Mensagem</button>
-        <a href="home.php">
-        <button id="agendar">Voltar</button>
-        </a>
         </div>
     </form>
+    <a href="home.php">
+        <button id="agendar">Voltar</button>
+    </a>
     <div class="paleta1"></div>
     <div class="paleta2"></div>
     <div class="paleta3"></div>
     <div class="paleta4"></div>
-
-
     </main>
 </body>
+<script>
+       document.addEventListener('DOMContentLoaded', function() {
+            var progressBar = document.getElementById('progress-bar');
+            progressBar.style.width = '50%';
+
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    progressBar.style.display = 'none';
+                }, 500);
+            });
+        });
+</script>
 </html>
